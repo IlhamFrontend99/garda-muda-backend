@@ -1,10 +1,9 @@
-<?php
+﻿<?php
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
-// Force Vercel Serverless Storage Path ke /tmp
 if (isset($_ENV["VERCEL"]) || getenv("VERCEL")) {
     app()->useStoragePath("/tmp");
 }
