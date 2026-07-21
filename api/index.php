@@ -1,4 +1,17 @@
 <?php
+if (isset($_GET["debug"])) {
+    header("Content-Type: application/json");
+    echo json_encode([
+        "view_provider_class_exists" => class_exists("Illuminate\\View\\ViewServiceProvider"),
+        "vendor_view_folder_exists" => is_dir(__DIR__ . "/../vendor/laravel/framework/src/Illuminate/View"),
+        "providers_file_content" => file_exists(__DIR__ . "/../bootstrap/providers.php") ? file_get_contents(__DIR__ . "/../bootstrap/providers.php") : "MISSING",
+        "app_php_content" => file_exists(__DIR__ . "/../bootstrap/app.php") ? file_get_contents(__DIR__ . "/../bootstrap/app.php") : "MISSING",
+        "composer_lock_exists" => file_exists(__DIR__ . "/../composer.lock"),
+        "vendor_autoload_exists" => file_exists(__DIR__ . "/../vendor/autoload.php"),
+    ]);
+    exit(0);
+}
+
 putenv("LARAVEL_STORAGE_PATH=/tmp/storage");
 $_ENV["LARAVEL_STORAGE_PATH"] = "/tmp/storage";
 $_ENV["LOG_CHANNEL"] = "stderr";
