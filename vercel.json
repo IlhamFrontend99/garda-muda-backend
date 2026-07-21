@@ -1,7 +1,6 @@
 ﻿{
   "version": 2,
   "outputDirectory": "public",
-  "framework": null,
   "functions": {
     "api/index.php": {
       "runtime": "vercel-php@0.7.1"
@@ -23,14 +22,5 @@
         { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization, Origin" }
       ]
     }
-  ],
-  "env": {
-    "APP_ENV": "production",
-    "APP_DEBUG": "false",
-    "CACHE_STORE": "array",
-    "CACHE_DRIVER": "array",
-    "SESSION_DRIVER": "cookie",
-    "LOG_CHANNEL": "stderr",
-    "VIEW_COMPILED_PATH": "/tmp"
-  }
+  ]
 }
