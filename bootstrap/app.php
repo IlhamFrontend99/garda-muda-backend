@@ -1,12 +1,8 @@
-﻿<?php
+<?php
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-
-if (isset($_ENV["VERCEL"]) || getenv("VERCEL")) {
-    app()->useStoragePath("/tmp");
-}
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(

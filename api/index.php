@@ -1,4 +1,7 @@
-﻿<?php
+<?php
+
+putenv("LARAVEL_STORAGE_PATH=/tmp");
+$_ENV["LARAVEL_STORAGE_PATH"] = "/tmp";
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS, PATCH");
