@@ -18,13 +18,14 @@ try {
     require __DIR__ . "/../vendor/autoload.php";
     $app = require_once __DIR__ . "/../bootstrap/app.php";
 
-    // Bind dummy view service agar container tidak pernah meledak
-    $app->bind("view", function() {
+    // Bind Robust Dummy View Service agar semua method Facade View teratasi
+    $app->singleton("view", function() {
         return new class {
-            public function make() { return $this; }
+            public function make($view = null, $data = [], $mergeData = []) { return $this; }
             public function render() { return ""; }
-            public function exists() { return false; }
-            public function share() {}
+            public function exists($view = null) { return false; }
+            public function share($key = null, $value = null) {}
+            public function __call($method, $parameters) { return $this; }
         };
     });
 
