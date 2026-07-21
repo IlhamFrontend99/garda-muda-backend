@@ -18,13 +18,21 @@ try {
     require __DIR__ . "/../vendor/autoload.php";
     $app = require_once __DIR__ . "/../bootstrap/app.php";
 
-    // Bind Robust Dummy View Service agar semua method Facade View teratasi
+    // Bind Dummy View yang memenuhi Contract View & Factory Laravel
     $app->singleton("view", function() {
-        return new class {
+        return new class implements Illuminate\Contracts\View\Factory, Illuminate\Contracts\View\View {
             public function make($view = null, $data = [], $mergeData = []) { return $this; }
+            public function file($path, $data = [], $mergeData = []) { return $this; }
+            public function exists($view) { return false; }
+            public function share($key, $value = null) { return $this; }
             public function render() { return ""; }
-            public function exists($view = null) { return false; }
-            public function share($key = null, $value = null) {}
+            public function with($key, $value = null) { return $this; }
+            public function name() { return "dummy"; }
+            public function getData() { return []; }
+            public function offsetExists($offset): bool { return false; }
+            public function offsetGet($offset): mixed { return null; }
+            public function offsetSet($offset, $value): void {}
+            public function offsetUnset($offset): void {}
             public function __call($method, $parameters) { return $this; }
         };
     });
