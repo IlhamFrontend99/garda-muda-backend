@@ -11,16 +11,15 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__."/../routes/console.php",
         health: "/up",
     )
+    ->withProviders([
+        Illuminate\Filesystem\FilesystemServiceProvider::class,
+        Illuminate\View\ViewServiceProvider::class,
+    ])
     ->withMiddleware(function (Middleware $middleware) {
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->respond(function ($response, Throwable $e, $request) {
-            return response()->json([
-                "error" => true,
-                "message" => $e->getMessage(),
-                "file" => $e->getFile(),
-                "line" => $e->getLine()
-            ], $response->getStatusCode() >= 400 ? $response->getStatusCode() : 500);
+        $exceptions->shouldRenderJsonWhen(function ($request, \Throwable $e) {
+            return true;
         });
     })->create();
