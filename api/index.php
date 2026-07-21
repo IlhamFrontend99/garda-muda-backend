@@ -3,7 +3,7 @@
 putenv("LARAVEL_STORAGE_PATH=/tmp");
 $_ENV["LARAVEL_STORAGE_PATH"] = "/tmp";
 $_ENV["APP_ENV"] = "production";
-$_ENV["APP_DEBUG"] = "false";
+$_ENV["APP_DEBUG"] = "true";
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS, PATCH");
@@ -17,25 +17,6 @@ if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] === "OPTIONS
 try {
     require __DIR__ . "/../vendor/autoload.php";
     $app = require_once __DIR__ . "/../bootstrap/app.php";
-
-    // Bind Dummy View yang memenuhi Contract View & Factory Laravel
-    $app->singleton("view", function() {
-        return new class implements Illuminate\Contracts\View\Factory, Illuminate\Contracts\View\View {
-            public function make($view = null, $data = [], $mergeData = []) { return $this; }
-            public function file($path, $data = [], $mergeData = []) { return $this; }
-            public function exists($view) { return false; }
-            public function share($key, $value = null) { return $this; }
-            public function render() { return ""; }
-            public function with($key, $value = null) { return $this; }
-            public function name() { return "dummy"; }
-            public function getData() { return []; }
-            public function offsetExists($offset): bool { return false; }
-            public function offsetGet($offset): mixed { return null; }
-            public function offsetSet($offset, $value): void {}
-            public function offsetUnset($offset): void {}
-            public function __call($method, $parameters) { return $this; }
-        };
-    });
 
     $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
