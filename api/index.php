@@ -18,6 +18,16 @@ try {
     require __DIR__ . "/../vendor/autoload.php";
     $app = require_once __DIR__ . "/../bootstrap/app.php";
 
+    // Bind dummy view service agar container tidak pernah meledak
+    $app->bind("view", function() {
+        return new class {
+            public function make() { return $this; }
+            public function render() { return ""; }
+            public function exists() { return false; }
+            public function share() {}
+        };
+    });
+
     $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
     $response = $kernel->handle(
