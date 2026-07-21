@@ -18,8 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") { http_response_code(200); exit(0)
 try {
     require __DIR__ . "/../vendor/autoload.php";
     $app = require_once __DIR__ . "/../bootstrap/app.php";
-    $app->useStoragePath("/tmp/storage");
-
     $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
     $response = $kernel->handle($request = Illuminate\Http\Request::capture());
     $response->headers->set("Access-Control-Allow-Origin", "*");
