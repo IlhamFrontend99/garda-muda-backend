@@ -2,6 +2,8 @@
 
 putenv("LARAVEL_STORAGE_PATH=/tmp");
 $_ENV["LARAVEL_STORAGE_PATH"] = "/tmp";
+$_ENV["APP_ENV"] = "production";
+$_ENV["APP_DEBUG"] = "false";
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS, PATCH");
@@ -15,6 +17,8 @@ if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] === "OPTIONS
 try {
     require __DIR__ . "/../vendor/autoload.php";
     $app = require_once __DIR__ . "/../bootstrap/app.php";
+
+    $app->register(Illuminate\View\ViewServiceProvider::class);
 
     $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
