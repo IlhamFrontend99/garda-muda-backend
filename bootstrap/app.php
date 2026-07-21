@@ -15,7 +15,12 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->shouldRenderJsonWhen(function ($request, \Throwable $e) {
-            return true;
+        $exceptions->respond(function ($response, Throwable $e, $request) {
+            return response()->json([
+                "error" => true,
+                "message" => $e->getMessage(),
+                "file" => $e->getFile(),
+                "line" => $e->getLine()
+            ], $response->getStatusCode() >= 400 ? $response->getStatusCode() : 500);
         });
     })->create();
