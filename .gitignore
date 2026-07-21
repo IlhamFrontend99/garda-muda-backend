@@ -12,3 +12,4 @@ public/storage
 storage/*.key
 .vscode/
 .idea/
+bootstrap/cache/*.php
